@@ -23,6 +23,8 @@ our $data;
     for my $id (keys %$id2names) {
         push @$data, [$id2alpha2->{$id}, $id2names->{$id}[0]];
     }
+
+    $data = [sort {$a->[0] cmp $b->[0]} @$data];
 }
 
 my $res = gen_read_table_func(
