@@ -19,9 +19,12 @@ our $data;
     $data = [];
     my $id2names  = $Locale::Codes::Data{'country'}{'id2names'};
     my $id2alpha2 = $Locale::Codes::Data{'country'}{'id2code'}{'alpha-2'};
+    my $id2alpha3 = $Locale::Codes::Data{'country'}{'id2code'}{'alpha-3'};
 
     for my $id (keys %$id2names) {
-        push @$data, [$id2alpha2->{$id}, $id2names->{$id}[0]];
+        # skip countries that no longer has alpha3 codes
+        next unless $id2alpha3->{$id};
+        push @$data, [$id2alpha3->{$id}, $id2alpha2->{$id}, $id2names->{$id}[0]];
     }
 
     $data = [sort {$a->[0] cmp $b->[0]} @$data];
@@ -34,20 +37,26 @@ my $res = gen_read_table_func(
     table_spec => {
         summary => 'List of countries',
         fields => {
-            alpha2 => {
-                summary => 'ISO 2-letter code',
+            alpha3 => {
+                summary => 'ISO 3166 3-letter code',
                 schema => 'str*',
                 pos => 0,
+                sortable => 1,
+            },
+            alpha2 => {
+                summary => 'ISO 3166 2-letter code',
+                schema => 'str*',
+                pos => 1,
                 sortable => 1,
             },
             en_name => {
                 summary => 'English name',
                 schema => 'str*',
-                pos => 1,
+                pos => 2,
                 sortable => 1,
             },
         },
-        pk => 'alpha2',
+        pk => 'alpha3',
     },
     description => <<'_',
 
