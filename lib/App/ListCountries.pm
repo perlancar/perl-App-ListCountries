@@ -70,4 +70,8 @@ die "Can't generate function: $res->[0] - $res->[1]" unless $res->[0] == 200;
 
 L<Locale::Codes>
 
+L<list-languages> from L<App::ListLanguages>
+
+L<list-currencies> from L<App::ListCurrencies>
+
 =cut
