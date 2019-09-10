@@ -64,16 +64,18 @@ Source data is generated from `Locale::Codes::Country_Codes`. so make sure you
 have a relatively recent version of the module.
 
 _
-    examples => [
-        {
-            args => {q=>'lu'},
-            test => 0,
-        },
-        {
-            args => {q=>'lu', detail=>1},
-            test => 0,
-        },
-    ],
+    extra_props => {
+        examples => [
+            {
+                args => {query=>'lu'},
+                test => 0,
+            },
+            {
+                args => {query=>'lu', detail=>1},
+                test => 0,
+            },
+        ],
+    },
 );
 die "Can't generate function: $res->[0] - $res->[1]" unless $res->[0] == 200;
 
